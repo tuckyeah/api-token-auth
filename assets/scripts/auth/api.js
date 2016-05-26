@@ -1,9 +1,59 @@
 'use strict';
 
+const app = require('../app-data');
+
+const bookCreate = (success, failure, data) => {
+  $.ajax({
+    method: 'POST',
+    url: app.api + '/books',
+    data,
+  }).done(success)
+  .fail(failure);
+};
+
+const bookPatch = (success, failure, data, id) => {
+  $.ajax({
+    method: 'PATCH',
+    url: app.api + '/books/' + id,
+    data,
+  }).done(success)
+  .fail(failure);
+};
+
 const signUp = (success, failure, data) => {
-  Math.random() > 0.5 ? success('in signUp') : failure(data);
+  $.ajax({
+    method: 'POST',
+    url: app.api + '/sign-up',
+    data,
+  }).done(success)
+  .fail(failure);
+};
+
+const signIn = (success, failure, data) => {
+  $.ajax({
+    method: 'POST',
+    url: app.api + '/sign-in',
+    data,
+  }).done(success)
+  .fail(failure);
+};
+
+const signOut = (success, failure) => {
+  // if (!app.user) bad;
+  $.ajax({
+    method: 'DELETE',
+    url: app.api + '/sign-out/' + app.user.id,
+    headers: {
+      Authorization: 'Token token=' + app.user.token,
+    },
+  }).done(success)
+  .fail(failure);
 };
 
 module.exports = {
+  bookCreate,
+  bookPatch,
   signUp,
+  signIn,
+  signOut,
 };
