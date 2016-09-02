@@ -39,11 +39,31 @@ const onSignOut = function (event) {
     .fail(ui.failure);
 };
 
+const onGetAllUsers = function (event) {
+  event.preventDefault();
+
+  api.index()
+    .done(ui.listUsers)
+    .fail(ui.failure);
+};
+
+const onGetOneUser = function (event) {
+  event.preventDefault();
+  let data = getFormFields(event.target);
+
+  api.show(data)
+    .done(ui.listUsers)
+    .fail(ui.failure);
+};
+
+
 const addHandlers = () => {
   $('#sign-up').on('submit', onSignUp);
   $('#sign-in').on('submit', onSignIn);
   $('#change-password').on('submit', onChangePassword);
   $('#sign-out').on('submit', onSignOut);
+  $('#get-all-users').on('submit', onGetAllUsers);
+  $('#get-one-user').on('submit', onGetOneUser);
 };
 
 module.exports = {

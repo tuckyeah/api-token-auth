@@ -14,6 +14,8 @@ const failure = (error) => {
 // so it refreshes with every sign in!
 const signInSuccess = (data) => {
   app.user = data.user;
+  $('#sign-in').hide();
+  $('#sign-out').show();
 };
 
 // we don't get anything back from the API for a change password request
@@ -25,6 +27,22 @@ const changePasswordSuccess = () => {
 const signOutSuccess = () => {
   app.user = null;
   console.log('User signed out successfully');
+  $('#sign-in').show();
+  $('#sign-out').hide();
+};
+
+
+const listUsers = (data) => {
+  $('.user-box').html('');
+  if (data.users === undefined) {
+    let user = data.user;
+    $('.user-box').append('<p>'+user.id+': '+user.email+'</p>');
+  } else {
+    let users = data.users;
+    users.forEach(function(e, i){
+      $('.user-box').append('<p>'+users[i].id+': '+users[i].email+'</p>');
+    });
+  }
 };
 
 module.exports = {
@@ -32,5 +50,6 @@ module.exports = {
   success,
   signInSuccess,
   changePasswordSuccess,
-  signOutSuccess
+  signOutSuccess,
+  listUsers
 };

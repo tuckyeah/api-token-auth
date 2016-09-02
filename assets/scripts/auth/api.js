@@ -42,9 +42,31 @@ const signOut = () => {
   });
 };
 
+const index = () => {
+  return $.ajax({
+    url: app.host + '/users',
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + app.user.token,
+    }
+  });
+};
+
+const show = (data) => {
+  return $.ajax({
+    url: app.host + '/users/' + data.user.id,
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + app.user.token
+    }
+  });
+};
+
 module.exports = {
   signUp,
   signIn,
   changePassword,
-  signOut
+  signOut,
+  index,
+  show
 };
