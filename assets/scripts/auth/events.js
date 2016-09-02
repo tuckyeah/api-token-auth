@@ -1,15 +1,20 @@
 'use strict';
 
-const root = '../../..';
-const getFormFields = require(`${root}/lib/get-form-fields`);
+const getFormFields = require('../../../lib/get-form-fields');
 
 const api = require('./api');
 const ui = require('./ui');
 
 const onSignUp = function (event) {
-  let data = getFormFields(this);
   event.preventDefault();
-  api.signUp(ui.success, ui.failure, data);
+
+  // can also call getFormFields(this)
+  // 'this' is whatever fired the function (same as passing 'event.target')
+  let data = getFormFields(event.target);
+
+  api.signUp(data)
+    .done(ui.success)
+    .fail(ui.failure);
 };
 
 const addHandlers = () => {
